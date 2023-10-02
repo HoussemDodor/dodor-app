@@ -1,9 +1,9 @@
-import './App.css';
+import Login from "./Login";
 
 const App = () => {
   return (
     <div className="App">
-      <h1>Hello Dodor!</h1>
+      <Login />
     </div>
   );
 }
