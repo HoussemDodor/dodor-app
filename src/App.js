@@ -2,9 +2,9 @@ import Login from "./Login";
 
 const App = () => {
   return (
-    <div className="App">
+    <main>
       <Login />
-    </div>
+    </main>
   );
 }
 
