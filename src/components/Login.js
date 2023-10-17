@@ -1,20 +1,16 @@
-import { useState, useEffect, useContext } from "react";
-import AuthContext from "./context/AuthProvider";
-
-import axios from "./api/axios";
+import { useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
+import { Link, UseNavigate, useLocation, useNavigate } from "react-router-dom";
+import axios from "../api/axios";
 
 const Login = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
 
-  useEffect(() => {
-    console.log(username);
-  }, [username]);
-
-  useEffect(() => {
-    console.log(pwd);
-  }, [pwd]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,13 +19,16 @@ const Login = () => {
       const response = await axios.post("/auth/login", { username, pwd });
 
       // Login succes, save authentication info
-      console.log(response?.data);
       const accesToken = response?.data?.accesToken;
       const roles = response?.data?.roles;
 
+      // after Login succes actions
       setAuth({ username, pwd, roles, accesToken });
-      //setPwd("");
-      //setUsername("");
+      setUsername("");
+      setPwd("");
+      navigate(from, { replace: true });
+      console.log("SUCCES IN ALL")
+
     } catch (err) {
       if (!err?.response) {
         console.log("ERROR: no server response");
@@ -60,6 +59,7 @@ const Login = () => {
               placeholder="Email of Gebruikersnaam..."
               onChange={(e) => setUsername(e.target.value)}
               required
+              autoComplete="off"
             />
           </div>
           <div className="mt-3">
