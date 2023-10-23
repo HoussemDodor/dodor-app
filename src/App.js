@@ -5,12 +5,6 @@ import Unauthorized from "./components/Unauthorized";
 import Login from "./components/Login";
 import Home from "./components/Home";
 
-const ROLES = {
-  User: 1,
-  Editor: 2,
-  Admin: 3,
-};
-
 const App = () => {
   return (
     <Routes>
@@ -20,7 +14,7 @@ const App = () => {
         <Route path="unauthorized" element={<Unauthorized />} />
 
         {/* protected routes */}
-        <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+        <Route element={<RequireAuth />}>
           <Route path="/" element={<Home />} />
         </Route>
       </Route>

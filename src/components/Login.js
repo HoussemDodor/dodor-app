@@ -18,16 +18,21 @@ const Login = () => {
     try {
       const response = await axios.post("/auth/login", { username, pwd });
 
+      console.log(response)
+
+      // TODO CHECK BETTER FOR LOGIN
+      // IF NO ERROR IS RETURNED LOGIN IS CONSIDERED SUCCESFULL
+      if (!response.data.accesToken) return;
+
       // Login succes, save authentication info
       const accesToken = response?.data?.accesToken;
       const roles = response?.data?.roles;
 
       // after Login succes actions
-      setAuth({ username, pwd, roles, accesToken });
+      setAuth({ username, accesToken });
       setUsername("");
       setPwd("");
       navigate(from, { replace: true });
-      console.log("SUCCES IN ALL")
 
     } catch (err) {
       if (!err?.response) {

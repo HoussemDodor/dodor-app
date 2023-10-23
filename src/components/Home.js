@@ -1,9 +1,15 @@
-import React from 'react'
+import useAuth from "../hooks/useAuth";
+import { useEffect, useState } from "react";
+import Users from "./Users"
 
 const Home = () => {
+  const {auth} = useAuth();
   return (
-    <h1>HOME</h1>
-  )
-}
+    <section>
+      <h1 className="text-center text-green-500 font-bold capitalize text-lg">Welcome {auth.username}</h1>
+      <Users />
+    </section>
+  );
+};
 
-export default Home
+export default Home;
